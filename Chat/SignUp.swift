@@ -39,6 +39,7 @@ struct SignUp: View {
     @State var successfulSignup = false
     @State var alertText = ""
     @State var CustomNavitaionTitle = "Sign Up"
+    @State var signUpButtonEnabled = false
     var coloredSignIn: AttributedString{
         var result = AttributedString("Sign In")
         result.foregroundColor = Color("Blue")
@@ -50,8 +51,6 @@ struct SignUp: View {
     var body: some View {
         ZStack(alignment: .top){
             ScrollView{
-                
-                
                 VStack(spacing: -8){
                     
                     Image(uiImage: UIImage(named: "Rapipay_SignUp")!).resizable()
@@ -134,15 +133,15 @@ struct SignUp: View {
                     }
                     
                     
-                    CustomPrimaryButton(title: "Sign up"){
-                        //print(vmUserName.value)
+                    CustomPrimaryButton(title: "Sign up", colorr: signUpButtonEnabled ? Color("Blue") : Color("Grey"), borderColor: signUpButtonEnabled ? Color("Blue") : Color("DarkGrey")){
                         createUser()
                         
                         print("data saved")
                         alertText = "Successful Sign Up"
                         successfulSignup = true
-                        //print(DatabaseHelper.shared.loadUsers())
-                    }.alert(alertText, isPresented: $successfulSignup, actions: {
+                    }
+                    .allowsHitTesting(signUpButtonEnabled)
+                    .alert(alertText, isPresented: $successfulSignup, actions: {
                         
                     }).onChange(of: successfulSignup, perform: { newVal in
                         if(successfulSignup == false){
@@ -151,41 +150,37 @@ struct SignUp: View {
                         }
                     })
                     .padding(.top, 32)
-                    
                 }
                 .padding(.horizontal, 50)
                 .frame(minHeight: self.height - self.height/5)
-                
                 .onAppear(){
                     print("ONPAGE2 \(ONPAGE)")
-                    /*
                     CustomTextField.sendFocus = {received in
-                        if(received == "Name"){
+                        if(received == "User Name"){
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                emailFocus = true
+                                firstNameFocus = true
                             }
                         }
-                        if(received == "Email"){
+                        if(received == "First Name"){
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                passFocus = true
+                                lastNameFocus = true
+                            }
+                        }
+                        if(received == "Last Name"){
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                passwordFocus = true
                             }
                         }
                         if(received == "Password"){
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                dobFocus = true
-                            }
-                        }
-                        if(received == "Date of Birth"){
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                nameFocus = true
+                                userNameFocus = true
                             }
                         }
                     }
                     self.width = Common.shared.width
                     self.height = Common.shared.height
                     self.tfWidth = Common.shared.width - 100
-                    nameFocus = true
-                    */
+                    userNameFocus = true
                 }
                 .onDisappear(){
                     vmUserName.value = ""
@@ -193,20 +188,18 @@ struct SignUp: View {
                     vmLastName.value = ""
                     vmPassword.value = ""
                 }
-                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){_ in
-                    //Global.shared.updateOrientation()
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.8){
-                        self.width = Common.shared.width
-                        self.tfWidth = Common.shared.width - 100
-                        self.height = Common.shared.height
-                        print(self.width)
-                    }
-                    
-                }
+                
                 
             }
-            .navigationBarHidden(true)
-            .padding(.top, 40)
+            .navigationTitle("SignUp")
+            //.navigationBarHidden(true)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){_ in
+            DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
+                self.width = Common.shared.width
+                self.tfWidth = Common.shared.width - 100
+                self.height = Common.shared.height
+            }
         }
         //.overlay(CustomNavigation(title: $CustomNavitaionTitle, ONPAGE: $ONPAGE, rightImage: ""))
         .onAppear(){
@@ -221,11 +214,36 @@ struct SignUp: View {
                 try? dismiss()
             }
         }
+        .onChange(of: vmUserName.value){newVal in
+            checkValidity()
+        }
+        .onChange(of: vmFirstName.value){newVal in
+            checkValidity()
+        }
+        .onChange(of: vmLastName.value){newVal in
+            checkValidity()
+        }
+        .onChange(of: vmPassword.value){newVal in
+            checkValidity()
+        }
+
     }
     func createUser(){
         NetworkManager.shared.createUser(userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value){data in
             print(String(data: data as! Data, encoding: .utf8)!)
             
+        }
+    }
+    func checkValidity(){
+        var tempIsValidUserName = Common.shared.isValidName(vmUserName.value)
+        var tempIsValidFirstName = Common.shared.isValidName(vmFirstName.value)
+        var tempIsValidLastName = Common.shared.isValidName(vmLastName.value)
+        var tempIsValidPassword = Common.shared.isValidPassword(vmPassword.value)
+        if(tempIsValidUserName && tempIsValidFirstName && tempIsValidLastName && tempIsValidPassword){
+            signUpButtonEnabled = true
+        }
+        else{
+            signUpButtonEnabled = false
         }
     }
 }

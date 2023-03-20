@@ -34,12 +34,13 @@ struct NetworkManager{
         
     }
     func createUser(userName:String, firstName:String, lastName:String, password:String, completition: ((Any)->())?){
-        let parameters = "{\n    \"username\": \"\(userName)\",\n    \"first_name\": \"\(firstName)\",\n    \"last_name\": \"\(lastName)\",\n    \"secret\": \"\(password)\"}"
+        let parameters = "{\n    \"username\": \"\(userName)\",\n    \"first_name\": \"\(firstName)\",\n    \"last_name\": \"\(lastName)\",\n    \"secret\": \"\(password)\" \n}"
         let postData = parameters.data(using: .utf8)
         print(parameters)
         var request = URLRequest(url: URL(string: "https://api.chatengine.io/users/")!,timeoutInterval: Double.infinity)
         request.addValue(Common.shared.privateKey, forHTTPHeaderField: "PRIVATE-KEY")
-
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
         request.httpBody = postData
 
@@ -53,5 +54,24 @@ struct NetworkManager{
         }
 
         task.resume()
+    }
+    
+    func getUsers(completition: ((Any) -> ())?){
+        var request = URLRequest(url: URL(string: "https://api.chatengine.io/users/")!,timeoutInterval: Double.infinity)
+        request.addValue(Common.shared.privateKey, forHTTPHeaderField: "PRIVATE-KEY")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          completition?(data)
+        }
+
+        task.resume()
+
     }
 }

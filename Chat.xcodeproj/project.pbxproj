@@ -22,6 +22,7 @@
 		522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2229C8761B00444254 /* LoadingScreen.swift */; };
 		522E3B2529C8771C00444254 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2429C8771C00444254 /* SignUp.swift */; };
 		522E3B2729C8799900444254 /* CustomPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2629C8799900444254 /* CustomPrimaryButton.swift */; };
+		522FD63C29C8B9430022D952 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522FD63B29C8B9430022D952 /* LogIn.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		522E3B2229C8761B00444254 /* LoadingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		522E3B2429C8771C00444254 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		522E3B2629C8799900444254 /* CustomPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPrimaryButton.swift; sourceTree = "<group>"; };
+		522FD63B29C8B9430022D952 /* LogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				522E3B1E29C874E900444254 /* Common.swift */,
 				522E3B1C29C8720F00444254 /* NetworkManager.swift */,
 				522E3B2229C8761B00444254 /* LoadingScreen.swift */,
+				522FD63B29C8B9430022D952 /* LogIn.swift */,
 				522E3B2429C8771C00444254 /* SignUp.swift */,
 				522E3AEF29C86F8000444254 /* ContentView.swift */,
 				522E3B2029C875C700444254 /* CustomTextField.swift */,
@@ -286,6 +289,7 @@
 				522E3AFA29C86F8200444254 /* Chat.xcdatamodeld in Sources */,
 				522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */,
 				522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */,
+				522FD63C29C8B9430022D952 /* LogIn.swift in Sources */,
 				522E3B2729C8799900444254 /* CustomPrimaryButton.swift in Sources */,
 				522E3AF029C86F8000444254 /* ContentView.swift in Sources */,
 				522E3B1F29C874E900444254 /* Common.swift in Sources */,
