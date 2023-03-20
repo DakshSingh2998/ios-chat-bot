@@ -16,6 +16,12 @@
 		522E3B0429C86F8200444254 /* ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B0329C86F8200444254 /* ChatTests.swift */; };
 		522E3B0E29C86F8200444254 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B0D29C86F8200444254 /* ChatUITests.swift */; };
 		522E3B1029C86F8200444254 /* ChatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B0F29C86F8200444254 /* ChatUITestsLaunchTests.swift */; };
+		522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B1C29C8720F00444254 /* NetworkManager.swift */; };
+		522E3B1F29C874E900444254 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B1E29C874E900444254 /* Common.swift */; };
+		522E3B2129C875C700444254 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2029C875C700444254 /* CustomTextField.swift */; };
+		522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2229C8761B00444254 /* LoadingScreen.swift */; };
+		522E3B2529C8771C00444254 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2429C8771C00444254 /* SignUp.swift */; };
+		522E3B2729C8799900444254 /* CustomPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2629C8799900444254 /* CustomPrimaryButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,12 @@
 		522E3B0929C86F8200444254 /* ChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		522E3B0D29C86F8200444254 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		522E3B0F29C86F8200444254 /* ChatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		522E3B1C29C8720F00444254 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		522E3B1E29C874E900444254 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		522E3B2029C875C700444254 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		522E3B2229C8761B00444254 /* LoadingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		522E3B2429C8771C00444254 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		522E3B2629C8799900444254 /* CustomPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPrimaryButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +111,13 @@
 			isa = PBXGroup;
 			children = (
 				522E3AED29C86F8000444254 /* ChatApp.swift */,
+				522E3B1E29C874E900444254 /* Common.swift */,
+				522E3B1C29C8720F00444254 /* NetworkManager.swift */,
+				522E3B2229C8761B00444254 /* LoadingScreen.swift */,
+				522E3B2429C8771C00444254 /* SignUp.swift */,
 				522E3AEF29C86F8000444254 /* ContentView.swift */,
+				522E3B2029C875C700444254 /* CustomTextField.swift */,
+				522E3B2629C8799900444254 /* CustomPrimaryButton.swift */,
 				522E3AF129C86F8200444254 /* Assets.xcassets */,
 				522E3AF629C86F8200444254 /* Persistence.swift */,
 				522E3AF829C86F8200444254 /* Chat.xcdatamodeld */,
@@ -263,9 +281,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				522E3B2129C875C700444254 /* CustomTextField.swift in Sources */,
 				522E3AF729C86F8200444254 /* Persistence.swift in Sources */,
 				522E3AFA29C86F8200444254 /* Chat.xcdatamodeld in Sources */,
+				522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */,
+				522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */,
+				522E3B2729C8799900444254 /* CustomPrimaryButton.swift in Sources */,
 				522E3AF029C86F8000444254 /* ContentView.swift in Sources */,
+				522E3B1F29C874E900444254 /* Common.swift in Sources */,
+				522E3B2529C8771C00444254 /* SignUp.swift in Sources */,
 				522E3AEE29C86F8000444254 /* ChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
