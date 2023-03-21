@@ -10,6 +10,7 @@ import UIKit
 class Common{
     static var shared = Common()
     var privateKey = "9240f674-4630-4cad-819e-fd7c065b80cd"
+    var projectId = "9789b39d-fa43-4419-8af6-b51fb4fefb35"
     var width = UIScreen.main.bounds.width
     var height = UIScreen.main.bounds.height
     var currentOrientation = UIDevice.current.orientation
@@ -52,6 +53,11 @@ class Common{
     }
     func isValidName(_ name:String) -> Bool{
         let emailRegEx = "(?<! )[-a-zA-Z' ]{2,26}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: name)
+    }
+    func isValidUserName(_ name:String) -> Bool{
+        let emailRegEx = "(?<! )[-a-zA-Z0-9' ]{2,26}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: name)
     }

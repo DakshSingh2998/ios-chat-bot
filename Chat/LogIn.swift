@@ -21,7 +21,9 @@ struct LogIn: View {
     @State var isPassIncorrect = false
     @State var isUserNameIncorrect = false
     @State var CustomNavitaionTitle = "Log In"
-    @State var readyToNavigate : Bool = false
+    @State var gotoSignUp : Bool = false
+    @State var userModel:UserModel?
+    @State var signUp:SignUp?
     var body: some View {
         ZStack{
             ScrollView{
@@ -38,6 +40,7 @@ struct LogIn: View {
                         isUserNameIncorrect = false
                     }
                     CustomTextField(defaultplaceholder: "Password", vm: vmPass, width: $tfWidth, isProtected: true, isInCorrect: $isPassIncorrect, commitClosure: {
+                        print(vmPass.value)
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
                             userNameFocus = true
                         })
@@ -50,14 +53,15 @@ struct LogIn: View {
                         isUserNameIncorrect = false
                         userNameFocus = false
                         passFocus = false
-                        getUsers()
+                        getUser()
                         
                     }.padding(.top, 32)
                     
                     CustomPrimaryButton(title: "Create Account"){
-                        readyToNavigate = true
+                        gotoSignUp = true
                         
                     }.padding(.top, 32)
+                    NavigationLink("SignUp", destination: signUp, isActive: $gotoSignUp).hidden()
                     
                     
                 }.padding(.horizontal, 50)
@@ -72,6 +76,9 @@ struct LogIn: View {
                     .onDisappear(){
                         vmUserName.value = ""
                         vmPass.value = ""
+                        isUserNameIncorrect = false
+                        isPassIncorrect = false
+                        
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){_ in
                         DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
@@ -86,26 +93,29 @@ struct LogIn: View {
             .padding(.top, 80)
         }
         .navigationTitle("LogIn")
-        .navigationDestination(isPresented: $readyToNavigate) {
-            SignUp(ONPAGE: $ONPAGE)
-        }
+        
         //.overlay(CustomNavigation(title: $CustomNavitaionTitle, ONPAGE: $ONPAGE, rightImage: ""))
-            .onChange(of: ONPAGE){newVal in
-                if(ONPAGE < 3.0){
-                    try? dismiss()
-                }
-            }
+            
             .onAppear(){
-                
+                signUp = SignUp(ONPAGE: $ONPAGE)
             }
     }
     
-    func getUsers(){
-        NetworkManager.shared.getUsers(completition: { data in
-            print(String(data: data as! Data, encoding: .utf8)!)
+    func getUser(){
+        NetworkManager.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data in
+            guard let data = data as? [String: Any] else {return}
+            if(data["detail"] != nil){
+                isUserNameIncorrect = true
+                isPassIncorrect = true
+                return
+            }
+            userModel = nil
+            self.userModel = UserModel(data: data)
             
+            print(self.userModel)
         })
     }
+    
 }
 /*
  struct LoginPage_Previews: PreviewProvider {

@@ -29,17 +29,18 @@ struct SignUp: View {
     @State var temp = ""
     @State var width = Common.shared.width
     @State var tfWidth = Common.shared.width - 100
-    //@State var loginPage:LoginPage?
-    //@State var gotoLogin = false
     @State var isUserNameIncorrect = false
     @State var isFirstNameIncorrect = false
     @State var isLastNameIncorrect = false
     @State var isPasswordIncorrect = false
-    @State var False = false
     @State var successfulSignup = false
     @State var alertText = ""
-    @State var CustomNavitaionTitle = "Sign Up"
     @State var signUpButtonEnabled = false
+    @State var commonAlert = ""
+    @State var showCommonAlert = false
+    @State var buttonColor = Color("Grey")
+    @State var buttonTextColor = Color("White")
+    @State var backgroundOpacity = 1.0
     var coloredSignIn: AttributedString{
         var result = AttributedString("Sign In")
         result.foregroundColor = Color("Blue")
@@ -58,8 +59,9 @@ struct SignUp: View {
                         .scaledToFill()
                     
                         .padding(.bottom, 32)
+
                     CustomTextField(defaultplaceholder: "User Name", vm: vmUserName, width: $tfWidth, isInCorrect: $isUserNameIncorrect, commitClosure: {
-                        if(Common.shared.isValidName(vmUserName.value) == false){
+                        if(Common.shared.isValidUserName(vmUserName.value) == false){
                             isUserNameIncorrect = true
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 userNameFocus = true
@@ -67,7 +69,7 @@ struct SignUp: View {
                             return
                         }
                         else{
-                            isUserNameIncorrect = false
+                            //isUserNameIncorrect = false
                         }
                         isFirstNameIncorrect = false
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -85,7 +87,7 @@ struct SignUp: View {
                             return
                         }
                         else{
-                            isFirstNameIncorrect = false
+                            //isFirstNameIncorrect = false
                         }
                         isLastNameIncorrect = false
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -103,7 +105,7 @@ struct SignUp: View {
                             return
                         }
                         else{
-                            isLastNameIncorrect = false
+                            //isLastNameIncorrect = false
                         }
                         isPasswordIncorrect = false
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -113,7 +115,8 @@ struct SignUp: View {
                         isLastNameIncorrect = false
                     }
                     
-                    CustomTextField(defaultplaceholder: "Password", vm: vmPassword, width: $tfWidth, isProtected: true, isInCorrect: $isLastNameIncorrect, commitClosure: {
+                    CustomTextField(defaultplaceholder: "Password", vm: vmPassword, width: $tfWidth, isProtected: true, isInCorrect: $isPasswordIncorrect, commitClosure: {
+                        print(vmPassword.value)
                         if(Common.shared.isValidPassword(vmPassword.value) == false){
                             isPasswordIncorrect = true
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -122,7 +125,7 @@ struct SignUp: View {
                             return
                         }
                         else{
-                            isPasswordIncorrect = false
+                            //isPasswordIncorrect = false
                         }
                         isUserNameIncorrect = false
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -131,89 +134,65 @@ struct SignUp: View {
                     }).focused($passwordFocus).onTapGesture {
                         isPasswordIncorrect = false
                     }
+                    HStack{
+                        Spacer()
+                    }
+                    .frame(height: 32)
                     
-                    
-                    CustomPrimaryButton(title: "Sign up", colorr: signUpButtonEnabled ? Color("Blue") : Color("Grey"), borderColor: signUpButtonEnabled ? Color("Blue") : Color("DarkGrey")){
+                    CustomDynamicButton(title: "Sign up", colorr: $buttonColor , borderColor: $buttonColor, textColor: $buttonTextColor ){
+                        backgroundOpacity = 0.2
                         createUser()
-                        
-                        print("data saved")
-                        alertText = "Successful Sign Up"
-                        successfulSignup = true
                     }
                     .allowsHitTesting(signUpButtonEnabled)
-                    .alert(alertText, isPresented: $successfulSignup, actions: {
-                        
-                    }).onChange(of: successfulSignup, perform: { newVal in
-                        if(successfulSignup == false){
-                            ONPAGE = 3.0
-                            //gotoLogin = true
-                        }
-                    })
-                    .padding(.top, 32)
                 }
+                
                 .padding(.horizontal, 50)
                 .frame(minHeight: self.height - self.height/5)
-                .onAppear(){
-                    print("ONPAGE2 \(ONPAGE)")
-                    CustomTextField.sendFocus = {received in
-                        if(received == "User Name"){
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                firstNameFocus = true
-                            }
-                        }
-                        if(received == "First Name"){
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                lastNameFocus = true
-                            }
-                        }
-                        if(received == "Last Name"){
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                passwordFocus = true
-                            }
-                        }
-                        if(received == "Password"){
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                userNameFocus = true
-                            }
-                        }
-                    }
-                    self.width = Common.shared.width
-                    self.height = Common.shared.height
-                    self.tfWidth = Common.shared.width - 100
-                    userNameFocus = true
-                }
-                .onDisappear(){
-                    vmUserName.value = ""
-                    vmFirstName.value = ""
-                    vmLastName.value = ""
-                    vmPassword.value = ""
-                }
-                
-                
             }
+            .opacity(backgroundOpacity)
             .navigationTitle("SignUp")
-            //.navigationBarHidden(true)
+            .alert(alertText, isPresented: $successfulSignup, actions: {
+                Button("LOGIN", role: .cancel, action: {
+                    successfulSignup = false
+                    try? dismiss()
+                })
+            })
+            .alert(commonAlert, isPresented: $showCommonAlert, actions: {
+                Button("OK", role: .cancel, action: {
+                    showCommonAlert = false
+                })
+            })
+            if(backgroundOpacity != 1.0){
+                ProgressView()
+                    .backgroundStyle(Color("White"))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            
         }
+        
+        .onAppear(){
+            print("ONPAGE2 \(ONPAGE)")
+            self.width = Common.shared.width
+            self.height = Common.shared.height
+            self.tfWidth = Common.shared.width - 100
+            userNameFocus = true
+        }
+        .onDisappear(){
+            vmUserName.value = ""
+            vmFirstName.value = ""
+            vmLastName.value = ""
+            vmPassword.value = ""
+        }
+        
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){_ in
             DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
                 self.width = Common.shared.width
                 self.tfWidth = Common.shared.width - 100
                 self.height = Common.shared.height
             }
-        }
-        //.overlay(CustomNavigation(title: $CustomNavitaionTitle, ONPAGE: $ONPAGE, rightImage: ""))
-        .onAppear(){
-            vmUserName.value = "daksh2998"
-            vmFirstName.value = "Daksh"
-            vmLastName.value = "Singh"
-            vmPassword.value = "DakshSingh@9090"
+            
         }
         
-        .onChange(of: ONPAGE){newVal in
-            if(ONPAGE < 2.0){
-                try? dismiss()
-            }
-        }
         .onChange(of: vmUserName.value){newVal in
             checkValidity()
         }
@@ -226,24 +205,52 @@ struct SignUp: View {
         .onChange(of: vmPassword.value){newVal in
             checkValidity()
         }
+         
+        
+        
 
     }
     func createUser(){
-        NetworkManager.shared.createUser(userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value){data in
-            print(String(data: data as! Data, encoding: .utf8)!)
-            
+        NetworkManager.shared.createUser(userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value){data, error in
+            backgroundOpacity = 1.0
+            guard let data = data as? [String: Any] else {
+                commonAlert = "Check your Internet Connection"
+                showCommonAlert = true
+                return
+            }
+            if(data["message"] != nil){
+                commonAlert = data["message"] as! String
+                showCommonAlert = true
+                return
+            }
+            alertText = "SignUp Successful :)"
+            successfulSignup = true
         }
     }
     func checkValidity(){
-        var tempIsValidUserName = Common.shared.isValidName(vmUserName.value)
+        var tempIsValidUserName = Common.shared.isValidUserName(vmUserName.value)
+        if(tempIsValidUserName){
+            isUserNameIncorrect = false
+        }
         var tempIsValidFirstName = Common.shared.isValidName(vmFirstName.value)
+        if(tempIsValidFirstName){
+            isFirstNameIncorrect = false
+        }
         var tempIsValidLastName = Common.shared.isValidName(vmLastName.value)
+        if(tempIsValidLastName){
+            isLastNameIncorrect = false
+        }
         var tempIsValidPassword = Common.shared.isValidPassword(vmPassword.value)
+        if(tempIsValidPassword){
+            isPasswordIncorrect = false
+        }
         if(tempIsValidUserName && tempIsValidFirstName && tempIsValidLastName && tempIsValidPassword){
             signUpButtonEnabled = true
+            buttonColor = Color("Purple")
         }
         else{
             signUpButtonEnabled = false
+            buttonColor = Color("Grey")
         }
     }
 }

@@ -11,7 +11,7 @@ struct LoadingScreen: View {
     @State var ONPAGE:Double = 0.0
     var body: some View{
         ZStack{
-            NavigationStack{
+            NavigationView{
                 if(ONPAGE == 0.0){
                     ProgressView()
                 }

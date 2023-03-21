@@ -27,7 +27,6 @@ struct CustomTextField: View{
     var commitClosure: (() -> Void)?
     var body: some View{
         
-        
             VStack{
                 ZStack{
                     //border
@@ -41,7 +40,6 @@ struct CustomTextField: View{
                         
                         .background(Color(.white)).cornerRadius(4.0)
                     SecureField(placeholder, text: $vm.value, onCommit: {
-                        CustomTextField.sendFocus?(defaultplaceholder)
                         commitClosure?()
                     })
                     .padding(6)
