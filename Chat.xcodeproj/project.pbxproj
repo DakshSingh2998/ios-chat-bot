@@ -26,6 +26,7 @@
 		524D614329C96F8C0036F9F1 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614229C96F8C0036F9F1 /* WebSocket.swift */; };
 		524D614529C96FBF0036F9F1 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614429C96FBF0036F9F1 /* UserModel.swift */; };
 		524D614729C9A6380036F9F1 /* CustomDynamicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */; };
+		524D614B29C9C3A10036F9F1 /* AllChats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614A29C9C3A10036F9F1 /* AllChats.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		524D614229C96F8C0036F9F1 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		524D614429C96FBF0036F9F1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDynamicButton.swift; sourceTree = "<group>"; };
+		524D614A29C9C3A10036F9F1 /* AllChats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChats.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				522E3B2229C8761B00444254 /* LoadingScreen.swift */,
 				522FD63B29C8B9430022D952 /* LogIn.swift */,
 				522E3B2429C8771C00444254 /* SignUp.swift */,
+				524D614A29C9C3A10036F9F1 /* AllChats.swift */,
 				522E3AEF29C86F8000444254 /* ContentView.swift */,
 				522E3B2029C875C700444254 /* CustomTextField.swift */,
 				522E3B2629C8799900444254 /* CustomPrimaryButton.swift */,
@@ -298,6 +301,7 @@
 				522E3AF729C86F8200444254 /* Persistence.swift in Sources */,
 				522E3AFA29C86F8200444254 /* Chat.xcdatamodeld in Sources */,
 				522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */,
+				524D614B29C9C3A10036F9F1 /* AllChats.swift in Sources */,
 				524D614529C96FBF0036F9F1 /* UserModel.swift in Sources */,
 				522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */,
 				522FD63C29C8B9430022D952 /* LogIn.swift in Sources */,

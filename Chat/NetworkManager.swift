@@ -60,6 +60,35 @@ struct NetworkManager{
         task.resume()
         urlTask?(task)
     }
+    func createChat(userName:String, firstName:String, lastName:String, password:String, completition: ((Any, Any)->())?, urlTask: ((Any)->())?){
+        let parameters = "{\n    \"title\": \"\(UUID())\",\n    \"is_direct_chat\": false\n}"
+        let postData = parameters.data(using: .utf8)
+        print(parameters)
+        var request = URLRequest(url: URL(string: "https://api.chatengine.io/users/")!,timeoutInterval: Double.infinity)
+        request.addValue(Common.shared.privateKey, forHTTPHeaderField: "PRIVATE-KEY")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("{{user_name}}", forHTTPHeaderField: "User-Name")
+        request.addValue("{{user_secret}}", forHTTPHeaderField: "User-Secret")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                completition?(data, error)
+                return
+            }
+            guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else{
+                print("SERL ERR")
+                return
+            }
+            completition?(jsonData, error)
+            
+        }
+        
+        task.resume()
+        urlTask?(task)
+    }
     
     func getUsers(completition: ((Any) -> ())?){
         var request = URLRequest(url: URL(string: "https://api.chatengine.io/users/")!,timeoutInterval: Double.infinity)
@@ -83,7 +112,7 @@ struct NetworkManager{
 
         task.resume()
     }
-    func getUser(userName:String, pass:String, completition: ((Any) -> ())?){
+    func getUser(userName:String, pass:String, completition: ((Any, Any) -> ())?){
         var request = URLRequest(url: URL(string: "https://api.chatengine.io/users/me/")!,timeoutInterval: Double.infinity)
         request.addValue(Common.shared.projectId, forHTTPHeaderField: "Project-ID")
         request.addValue(userName, forHTTPHeaderField: "User-Name")
@@ -93,14 +122,14 @@ struct NetworkManager{
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
           guard let data = data else {
-            print(String(describing: error))
+              completition?(data, error)
             return
           }
             guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else{
                 print("SERL ERR")
                 return
             }
-          completition?(jsonData)
+          completition?(jsonData, error)
             
         }
 

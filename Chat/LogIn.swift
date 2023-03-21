@@ -24,6 +24,10 @@ struct LogIn: View {
     @State var gotoSignUp : Bool = false
     @State var userModel:UserModel?
     @State var signUp:SignUp?
+    @State var commonAlert = ""
+    @State var showCommonAlert = false
+    @State var allChats:AllChats?
+    @State var gotoAllChats = false
     var body: some View {
         ZStack{
             ScrollView{
@@ -62,8 +66,8 @@ struct LogIn: View {
                         
                     }.padding(.top, 32)
                     NavigationLink("SignUp", destination: signUp, isActive: $gotoSignUp).hidden()
-                    
-                    
+                    NavigationLink("AllChats", destination: allChats, isActive: $gotoAllChats).hidden()
+
                 }.padding(.horizontal, 50)
                     .onAppear(){
                         print("ONPAGE3 \(ONPAGE)")
@@ -98,12 +102,24 @@ struct LogIn: View {
             
             .onAppear(){
                 signUp = SignUp(ONPAGE: $ONPAGE)
+                allChats = AllChats(ONPAGE: $ONPAGE, userModel: $userModel)
+                vmUserName.value = "daksh2998"
+                vmPass.value = "Daksh@90"
             }
+            .alert(commonAlert, isPresented: $showCommonAlert, actions: {
+                Button("OK", role: .cancel, action: {
+                    showCommonAlert = false
+                })
+            })
     }
     
     func getUser(){
-        NetworkManager.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data in
-            guard let data = data as? [String: Any] else {return}
+        NetworkManager.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data, error in
+            guard let data = data as? [String: Any] else {
+                commonAlert = "\((error as! Error).localizedDescription)"
+                showCommonAlert = true
+                return
+            }
             if(data["detail"] != nil){
                 isUserNameIncorrect = true
                 isPassIncorrect = true
@@ -111,8 +127,8 @@ struct LogIn: View {
             }
             userModel = nil
             self.userModel = UserModel(data: data)
-            
             print(self.userModel)
+            gotoAllChats = true
         })
     }
     

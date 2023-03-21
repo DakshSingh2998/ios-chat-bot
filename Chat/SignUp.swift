@@ -150,6 +150,7 @@ struct SignUp: View {
                 .padding(.horizontal, 50)
                 .frame(minHeight: self.height - self.height/5)
             }
+            .allowsHitTesting(backgroundOpacity == 1.0 ? true : false)
             .opacity(backgroundOpacity)
             .navigationTitle("SignUp")
             .alert(alertText, isPresented: $successfulSignup, actions: {
