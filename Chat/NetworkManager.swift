@@ -33,7 +33,7 @@ struct NetworkManager{
         }.resume()
         
     }
-    func createUser(userName:String, firstName:String, lastName:String, password:String, completition: ((Any, Any)->())?){
+    func createUser(userName:String, firstName:String, lastName:String, password:String, completition: ((Any, Any)->())?, urlTask: ((Any)->())?){
         let parameters = "{\n    \"username\": \"\(userName)\",\n    \"first_name\": \"\(firstName)\",\n    \"last_name\": \"\(lastName)\",\n    \"secret\": \"\(password)\" \n}"
         let postData = parameters.data(using: .utf8)
         print(parameters)
@@ -43,22 +43,22 @@ struct NetworkManager{
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
         request.httpBody = postData
-
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-          guard let data = data else {
-            print("err", String(describing: error))
-              completition?(data, error)
-            return
-          }
+            guard let data = data else {
+                completition?(data, error)
+                return
+            }
             guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else{
                 print("SERL ERR")
                 return
             }
-          completition?(jsonData, error)
-          
+            completition?(jsonData, error)
+            
         }
-
+        
         task.resume()
+        urlTask?(task)
     }
     
     func getUsers(completition: ((Any) -> ())?){

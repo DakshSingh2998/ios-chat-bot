@@ -41,6 +41,7 @@ struct SignUp: View {
     @State var buttonColor = Color("Grey")
     @State var buttonTextColor = Color("White")
     @State var backgroundOpacity = 1.0
+    @State var task = URLSessionTask()
     var coloredSignIn: AttributedString{
         var result = AttributedString("Sign In")
         result.foregroundColor = Color("Blue")
@@ -163,9 +164,17 @@ struct SignUp: View {
                 })
             })
             if(backgroundOpacity != 1.0){
-                ProgressView()
+                ProgressView{
+                    CustomPrimaryButton(title: "Cancel", closure: {
+                        task.cancel()
+                    })
+                    .padding(.horizontal, 64)
+                    .padding(.top, 64)
+                }
+                .contentShape(Rectangle())
                     .backgroundStyle(Color("White"))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
             }
             
         }
@@ -176,12 +185,18 @@ struct SignUp: View {
             self.height = Common.shared.height
             self.tfWidth = Common.shared.width - 100
             userNameFocus = true
+            vmUserName.value = "daksh2998"
+            vmFirstName.value = "Daksh"
+            vmLastName.value = "Singh"
+            vmPassword.value = "Daksh@90"
         }
         .onDisappear(){
             vmUserName.value = ""
             vmFirstName.value = ""
             vmLastName.value = ""
             vmPassword.value = ""
+            task.cancel()
+            
         }
         
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){_ in
@@ -211,21 +226,25 @@ struct SignUp: View {
 
     }
     func createUser(){
-        NetworkManager.shared.createUser(userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value){data, error in
-            backgroundOpacity = 1.0
-            guard let data = data as? [String: Any] else {
-                commonAlert = "Check your Internet Connection"
-                showCommonAlert = true
-                return
-            }
-            if(data["message"] != nil){
-                commonAlert = data["message"] as! String
-                showCommonAlert = true
-                return
-            }
-            alertText = "SignUp Successful :)"
-            successfulSignup = true
-        }
+        NetworkManager.shared.createUser( userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value, completition:{
+            data, error in
+                backgroundOpacity = 1.0
+                guard let data = data as? [String: Any] else {
+                    commonAlert = "\((error as! Error).localizedDescription)"
+                    showCommonAlert = true
+                    return
+                }
+                if(data["message"] != nil){
+                    commonAlert = data["message"] as! String
+                    showCommonAlert = true
+                    return
+                }
+                alertText = "SignUp Successful :)"
+                successfulSignup = true
+        }, urlTask:{task in
+            self.task = task as! URLSessionTask
+            
+        })
     }
     func checkValidity(){
         var tempIsValidUserName = Common.shared.isValidUserName(vmUserName.value)
