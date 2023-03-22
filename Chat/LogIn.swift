@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct LogIn: View {
     @Environment(\.dismiss) var dismiss
     @Binding var ONPAGE:Double
@@ -14,7 +15,9 @@ struct LogIn: View {
     @ObservedObject var vmPass = TextModel()
     @FocusState var userNameFocus:Bool
     @FocusState var passFocus:Bool
-    @State var width = Common.shared.width
+    @State var width =
+    
+    Common.shared.width
     @State var tfWidth = Common.shared.width - 100
     @State var height = Common.shared.height
     @State var temp = ""
@@ -28,6 +31,8 @@ struct LogIn: View {
     @State var showCommonAlert = false
     @State var allChats:AllChats?
     @State var gotoAllChats = false
+    @State var backgroundOpacity = 1.0
+
     var body: some View {
         ZStack{
             ScrollView{
@@ -94,7 +99,14 @@ struct LogIn: View {
                     .frame(minHeight: self.height - self.height/3)
                     //.navigationBarHidden(true)
             }
+            .opacity(backgroundOpacity)
             .padding(.top, 80)
+            if(backgroundOpacity != 1.0){
+                ProgressView{
+                    
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .navigationTitle("LogIn")
         
@@ -114,7 +126,11 @@ struct LogIn: View {
     }
     
     func getUser(){
-        NetworkManager.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data, error in
+        var tempPass = vmPass.value
+        var tempUser = vmUserName.value
+        backgroundOpacity = 0.2
+        UserApi.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data, error in
+            backgroundOpacity = 1.0
             guard let data = data as? [String: Any] else {
                 commonAlert = "\((error as! Error).localizedDescription)"
                 showCommonAlert = true
@@ -126,10 +142,13 @@ struct LogIn: View {
                 return
             }
             userModel = nil
+            UserDefaults.standard.set(tempPass, forKey: "pass")
+            UserDefaults.standard.set(tempUser, forKey: "user")
             self.userModel = UserModel(data: data)
             print(self.userModel)
             gotoAllChats = true
         })
+         
     }
     
 }

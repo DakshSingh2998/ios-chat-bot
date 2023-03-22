@@ -10,12 +10,14 @@ import SwiftUI
 struct AllChats: View {
     @Binding var ONPAGE:Double
     @Binding var userModel:UserModel?
+    @State var gotoOptionsMenu = false
     
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             VStack{
                 Spacer()
-                
+                NavigationLink("OptionsMenu", destination: OptionsMenu(ONPAGE: $ONPAGE, userModel: $userModel), isActive: $gotoOptionsMenu)
+                    .hidden()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.bottom, 64)
@@ -26,6 +28,11 @@ struct AllChats: View {
                     .padding(32)
                     .background(Color("Orange"))
                     .clipShape(Circle())
+                    .padding(.trailing, 16)
+                    .onTapGesture {
+                        gotoOptionsMenu = true
+                    }
+            
                     
         }
         .navigationTitle("Chats")

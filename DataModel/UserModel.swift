@@ -15,12 +15,12 @@ struct UserModel{
     var email:String = ""
     var first_name:String = ""
     var last_name:String = ""
-    var avatar:Data = Data()
+    var avatar:Any = Data()
     var cusom_json:[String:Any] = [:]
     var is_online:Bool = false
     var created:String = ""
     
-    init(id: Int, is_authenticated: Bool, last_message: [String : Any], userName: String, secret: String, email: String, first_name: String, last_name: String, avatar: Data, cusom_json: [String : Any], is_online: Bool, created: String) {
+    init(id: Int, is_authenticated: Bool, last_message: [String : Any], userName: String, secret: String, email: String, first_name: String, last_name: String, avatar: Any, cusom_json: [String : Any], is_online: Bool, created: String) {
         self.id = id
         self.is_authenticated = is_authenticated
         self.last_message = last_message
@@ -59,7 +59,7 @@ struct UserModel{
         if let last_name = data["last_name"] as? String{
             self.last_name = last_name
         }
-        if let avatar = data["avatar"] as? Data{
+        if let avatar = data["avatar"]{
             self.avatar = avatar
         }
         if let cusom_json = data["cusom_json"] as? [String:Any]{
@@ -71,5 +71,6 @@ struct UserModel{
         if let created = data["created"] as? String{
             self.created = created
         }
+        
     }
 }

@@ -23,6 +23,11 @@
 		522E3B2529C8771C00444254 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2429C8771C00444254 /* SignUp.swift */; };
 		522E3B2729C8799900444254 /* CustomPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3B2629C8799900444254 /* CustomPrimaryButton.swift */; };
 		522FD63C29C8B9430022D952 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522FD63B29C8B9430022D952 /* LogIn.swift */; };
+		523E1FDF406D381E00EB1E27 /* UserApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E1FDE406D381E00EB1E27 /* UserApi.swift */; };
+		523E1FE3406D381E00EB1E27 /* ChatApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E1FE2406D381E00EB1E27 /* ChatApi.swift */; };
+		523E1FE5406D381E00EB1E27 /* OptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E1FE4406D381E00EB1E27 /* OptionsMenu.swift */; };
+		523E1FE7406D381E00EB1E27 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E1FE6406D381E00EB1E27 /* ChatModel.swift */; };
+		523E1FE9406D381E00EB1E27 /* ChatMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E1FE8406D381E00EB1E27 /* ChatMain.swift */; };
 		524D614329C96F8C0036F9F1 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614229C96F8C0036F9F1 /* WebSocket.swift */; };
 		524D614529C96FBF0036F9F1 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614429C96FBF0036F9F1 /* UserModel.swift */; };
 		524D614729C9A6380036F9F1 /* CustomDynamicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */; };
@@ -66,6 +71,11 @@
 		522E3B2429C8771C00444254 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		522E3B2629C8799900444254 /* CustomPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPrimaryButton.swift; sourceTree = "<group>"; };
 		522FD63B29C8B9430022D952 /* LogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
+		523E1FDE406D381E00EB1E27 /* UserApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApi.swift; sourceTree = "<group>"; };
+		523E1FE2406D381E00EB1E27 /* ChatApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatApi.swift; sourceTree = "<group>"; };
+		523E1FE4406D381E00EB1E27 /* OptionsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMenu.swift; sourceTree = "<group>"; };
+		523E1FE6406D381E00EB1E27 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		523E1FE8406D381E00EB1E27 /* ChatMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMain.swift; sourceTree = "<group>"; };
 		524D614229C96F8C0036F9F1 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		524D614429C96FBF0036F9F1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDynamicButton.swift; sourceTree = "<group>"; };
@@ -100,6 +110,8 @@
 		522E3AE129C86F8000444254 = {
 			isa = PBXGroup;
 			children = (
+				523E1FE1406D381E00EB1E27 /* Common */,
+				523E1FE0406D381E00EB1E27 /* DataModel */,
 				522E3AEC29C86F8000444254 /* Chat */,
 				522E3B0229C86F8200444254 /* ChatTests */,
 				522E3B0C29C86F8200444254 /* ChatUITests */,
@@ -121,18 +133,13 @@
 			isa = PBXGroup;
 			children = (
 				522E3AED29C86F8000444254 /* ChatApp.swift */,
-				522E3B1E29C874E900444254 /* Common.swift */,
-				522E3B1C29C8720F00444254 /* NetworkManager.swift */,
-				524D614429C96FBF0036F9F1 /* UserModel.swift */,
-				524D614229C96F8C0036F9F1 /* WebSocket.swift */,
 				522E3B2229C8761B00444254 /* LoadingScreen.swift */,
 				522FD63B29C8B9430022D952 /* LogIn.swift */,
 				522E3B2429C8771C00444254 /* SignUp.swift */,
 				524D614A29C9C3A10036F9F1 /* AllChats.swift */,
+				523E1FE4406D381E00EB1E27 /* OptionsMenu.swift */,
 				522E3AEF29C86F8000444254 /* ContentView.swift */,
-				522E3B2029C875C700444254 /* CustomTextField.swift */,
-				522E3B2629C8799900444254 /* CustomPrimaryButton.swift */,
-				524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */,
+				523E1FE8406D381E00EB1E27 /* ChatMain.swift */,
 				522E3AF129C86F8200444254 /* Assets.xcassets */,
 				522E3AF629C86F8200444254 /* Persistence.swift */,
 				522E3AF829C86F8200444254 /* Chat.xcdatamodeld */,
@@ -164,6 +171,30 @@
 				522E3B0F29C86F8200444254 /* ChatUITestsLaunchTests.swift */,
 			);
 			path = ChatUITests;
+			sourceTree = "<group>";
+		};
+		523E1FE0406D381E00EB1E27 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				524D614429C96FBF0036F9F1 /* UserModel.swift */,
+				523E1FE6406D381E00EB1E27 /* ChatModel.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		523E1FE1406D381E00EB1E27 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				522E3B1E29C874E900444254 /* Common.swift */,
+				522E3B1C29C8720F00444254 /* NetworkManager.swift */,
+				524D614229C96F8C0036F9F1 /* WebSocket.swift */,
+				522E3B2029C875C700444254 /* CustomTextField.swift */,
+				522E3B2629C8799900444254 /* CustomPrimaryButton.swift */,
+				524D614629C9A6380036F9F1 /* CustomDynamicButton.swift */,
+				523E1FDE406D381E00EB1E27 /* UserApi.swift */,
+				523E1FE2406D381E00EB1E27 /* ChatApi.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,12 +327,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523E1FE3406D381E00EB1E27 /* ChatApi.swift in Sources */,
 				522E3B2129C875C700444254 /* CustomTextField.swift in Sources */,
+				523E1FE7406D381E00EB1E27 /* ChatModel.swift in Sources */,
+				523E1FDF406D381E00EB1E27 /* UserApi.swift in Sources */,
 				524D614329C96F8C0036F9F1 /* WebSocket.swift in Sources */,
 				522E3AF729C86F8200444254 /* Persistence.swift in Sources */,
 				522E3AFA29C86F8200444254 /* Chat.xcdatamodeld in Sources */,
 				522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */,
+				523E1FE5406D381E00EB1E27 /* OptionsMenu.swift in Sources */,
 				524D614B29C9C3A10036F9F1 /* AllChats.swift in Sources */,
+				523E1FE9406D381E00EB1E27 /* ChatMain.swift in Sources */,
 				524D614529C96FBF0036F9F1 /* UserModel.swift in Sources */,
 				522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */,
 				522FD63C29C8B9430022D952 /* LogIn.swift in Sources */,

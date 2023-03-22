@@ -41,7 +41,6 @@ struct SignUp: View {
     @State var buttonColor = Color("Grey")
     @State var buttonTextColor = Color("White")
     @State var backgroundOpacity = 1.0
-    @State var task = URLSessionTask()
     var coloredSignIn: AttributedString{
         var result = AttributedString("Sign In")
         result.foregroundColor = Color("Blue")
@@ -166,11 +165,7 @@ struct SignUp: View {
             })
             if(backgroundOpacity != 1.0){
                 ProgressView{
-                    CustomPrimaryButton(title: "Cancel", closure: {
-                        task.cancel()
-                    })
-                    .padding(.horizontal, 64)
-                    .padding(.top, 64)
+                    
                 }
                 .contentShape(Rectangle())
                     .backgroundStyle(Color("White"))
@@ -196,7 +191,6 @@ struct SignUp: View {
             vmFirstName.value = ""
             vmLastName.value = ""
             vmPassword.value = ""
-            task.cancel()
             
         }
         
@@ -227,7 +221,7 @@ struct SignUp: View {
 
     }
     func createUser(){
-        NetworkManager.shared.createUser( userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value, completition:{
+        UserApi.shared.createUser( userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value, completition:{
             data, error in
                 backgroundOpacity = 1.0
                 guard let data = data as? [String: Any] else {
@@ -242,9 +236,6 @@ struct SignUp: View {
                 }
                 alertText = "SignUp Successful :)"
                 successfulSignup = true
-        }, urlTask:{task in
-            self.task = task as! URLSessionTask
-            
         })
     }
     func checkValidity(){
