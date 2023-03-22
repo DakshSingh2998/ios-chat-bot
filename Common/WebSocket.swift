@@ -40,7 +40,7 @@ class Websocket: ObservableObject {
                         print("SERL ERR")
                         return
                     }
-                    print((jsonData as? [String:Any])?["data"] as! [String : Any])
+                    
                     self.messages.append(MessageModel(data: (jsonData as? [String:Any])?["data"] as! [String : Any]))
                 case .data(let data):
                     // Handle binary data
