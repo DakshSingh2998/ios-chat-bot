@@ -21,7 +21,7 @@ struct OptionsMenu: View {
                 Text("Talk to Customer Care").onTapGesture {
                     createChat()
                 }
-                NavigationLink("ChatMain", destination: ChatMain(ONPAGE: $ONPAGE, userModel: $userModel, chatModel: $chatModel), isActive: $gotoChatMain).hidden()
+                NavigationLink("ChatMain", destination: ChatMain(ONPAGE: $ONPAGE, userModel: $userModel, chatModel: $chatModel, agentName: randAgent?.userName), isActive: $gotoChatMain).hidden()
             }
         }
         .alert(alertText, isPresented: $showAlert, actions: {
@@ -73,7 +73,7 @@ struct OptionsMenu: View {
         })
         dg.notify(queue: DispatchQueue.global(qos: .utility), execute: {
             if(completed == 2){
-                ChatApi.shared.addMember(chatId: chatModel!.id, userName: userName, pass: pass, userModelToAdd: randAgent!, completition: {data, error in
+                ChatApi.shared.addMember(chatId: chatModel!.id, userName: userName, pass: pass, userModelToAdd: randAgent!.userName, completition: {data, error in
                     guard let data = data as? [String: Any] else {
                         alertText = (error as! Error).localizedDescription
                         showAlert = true
