@@ -41,24 +41,5 @@ class UserApi{
         })
     }
     
-    func getRandAgent(completition: ((Any, Any) -> ())?){
-        var usersModel:[UserModel] = []
-        UserApi.shared.getUsers(completition: {data, error in
-            guard let data = data as? [[String: Any]] else {
-                completition?(data, error)
-                return
-            }
-            usersModel = data.map{UserModel(data: $0)}
-            var agents:[UserModel] = []
-            for i in usersModel{
-                if(i.email.starts(with: "agent")){
-                    agents.append(i)
-                }
-            }
-            let randomAgent = Int.random(in: 0..<agents.count)
-            
-            
-        })
-    }
     
 }
