@@ -23,10 +23,4 @@ struct ChatCell: View {
         .background(Color("LightGrey"))
     }
 }
-/*
- struct ChatCell_Previews: PreviewProvider {
- static var previews: some View {
- ChatCell()
- }
- }
- */
+

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5228C79129CC495500C6859F /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228C79029CC495500C6859F /* ChatCell.swift */; };
+		5228C79329CC73DE00C6859F /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228C79229CC73DE00C6859F /* Temp.swift */; };
+		5228C79529CC781A00C6859F /* DatabaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228C79429CC781A00C6859F /* DatabaseHelper.swift */; };
+		5228C79829CC78BA00C6859F /* TDataCore+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228C79629CC78BA00C6859F /* TDataCore+CoreDataClass.swift */; };
+		5228C79929CC78BA00C6859F /* TDataCore+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228C79729CC78BA00C6859F /* TDataCore+CoreDataProperties.swift */; };
 		522E3AEE29C86F8000444254 /* ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3AED29C86F8000444254 /* ChatApp.swift */; };
 		522E3AF029C86F8000444254 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E3AEF29C86F8000444254 /* ContentView.swift */; };
 		522E3AF229C86F8200444254 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 522E3AF129C86F8200444254 /* Assets.xcassets */; };
@@ -55,6 +59,10 @@
 
 /* Begin PBXFileReference section */
 		5228C79029CC495500C6859F /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		5228C79229CC73DE00C6859F /* Temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
+		5228C79429CC781A00C6859F /* DatabaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHelper.swift; sourceTree = "<group>"; };
+		5228C79629CC78BA00C6859F /* TDataCore+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDataCore+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5228C79729CC78BA00C6859F /* TDataCore+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDataCore+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		522E3AEA29C86F8000444254 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		522E3AED29C86F8000444254 /* ChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatApp.swift; sourceTree = "<group>"; };
 		522E3AEF29C86F8000444254 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -141,12 +149,13 @@
 				522FD63B29C8B9430022D952 /* LogIn.swift */,
 				522E3B2429C8771C00444254 /* SignUp.swift */,
 				524D614A29C9C3A10036F9F1 /* AllChats.swift */,
+				5228C79229CC73DE00C6859F /* Temp.swift */,
 				523E1FE4406D381E00EB1E27 /* OptionsMenu.swift */,
 				523E1FE8406D381E00EB1E27 /* ChatMain.swift */,
 				5228C79029CC495500C6859F /* ChatCell.swift */,
-				522E3AF129C86F8200444254 /* Assets.xcassets */,
 				522E3AEF29C86F8000444254 /* ContentView.swift */,
 				522E3AF629C86F8200444254 /* Persistence.swift */,
+				522E3AF129C86F8200444254 /* Assets.xcassets */,
 				522E3AF829C86F8200444254 /* Chat.xcdatamodeld */,
 				522E3AF329C86F8200444254 /* Preview Content */,
 			);
@@ -199,6 +208,9 @@
 				523E1FDE406D381E00EB1E27 /* UserApi.swift */,
 				523E1FE2406D381E00EB1E27 /* ChatApi.swift */,
 				524D614229C96F8C0036F9F1 /* WebSocket.swift */,
+				5228C79429CC781A00C6859F /* DatabaseHelper.swift */,
+				5228C79629CC78BA00C6859F /* TDataCore+CoreDataClass.swift */,
+				5228C79729CC78BA00C6859F /* TDataCore+CoreDataProperties.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -337,14 +349,18 @@
 				522E3B2129C875C700444254 /* CustomTextField.swift in Sources */,
 				523E1FE7406D381E00EB1E27 /* ChatModel.swift in Sources */,
 				523E1FDF406D381E00EB1E27 /* UserApi.swift in Sources */,
+				5228C79529CC781A00C6859F /* DatabaseHelper.swift in Sources */,
 				524D614329C96F8C0036F9F1 /* WebSocket.swift in Sources */,
 				522E3AF729C86F8200444254 /* Persistence.swift in Sources */,
 				522E3AFA29C86F8200444254 /* Chat.xcdatamodeld in Sources */,
 				522E3B1D29C8720F00444254 /* NetworkManager.swift in Sources */,
 				523E1FE5406D381E00EB1E27 /* OptionsMenu.swift in Sources */,
 				524D614B29C9C3A10036F9F1 /* AllChats.swift in Sources */,
+				5228C79929CC78BA00C6859F /* TDataCore+CoreDataProperties.swift in Sources */,
 				523E1FE9406D381E00EB1E27 /* ChatMain.swift in Sources */,
+				5228C79829CC78BA00C6859F /* TDataCore+CoreDataClass.swift in Sources */,
 				524D614529C96FBF0036F9F1 /* UserModel.swift in Sources */,
+				5228C79329CC73DE00C6859F /* Temp.swift in Sources */,
 				522E3B2329C8761B00444254 /* LoadingScreen.swift in Sources */,
 				5228C79129CC495500C6859F /* ChatCell.swift in Sources */,
 				522FD63C29C8B9430022D952 /* LogIn.swift in Sources */,
