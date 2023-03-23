@@ -10,8 +10,8 @@ import SwiftUI
 struct ChatCell: View {
     @State var messageModel:MessageModel
     var body: some View {
-        VStack{
-            HStack{
+        VStack(alignment: .leading){
+            HStack(alignment: .top){
                 Text(messageModel.sender_username)
                 Spacer()
                 Text(messageModel.created)
@@ -23,9 +23,10 @@ struct ChatCell: View {
         .background(Color("LightGrey"))
     }
 }
-
-struct ChatCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatCell()
-    }
-}
+/*
+ struct ChatCell_Previews: PreviewProvider {
+ static var previews: some View {
+ ChatCell()
+ }
+ }
+ */

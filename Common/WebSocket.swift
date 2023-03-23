@@ -25,7 +25,7 @@ class Websocket:ObservableObject {
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
-                self.webSocketTask?.resume()
+                //self.webSocketTask?.resume()
             case .success(let message):
                 switch message {
                 case .string(let text):
@@ -48,7 +48,9 @@ class Websocket:ObservableObject {
                         guard let data2 = data2["message"] as? [String:Any] else{
                             break
                         }
-                        self.messages.append(MessageModel(data: data2))
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            self.messages.append(MessageModel(data: data2))
+                        }
                         
                         
                     }

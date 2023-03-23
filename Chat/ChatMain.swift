@@ -21,16 +21,20 @@ struct ChatMain: View {
         ZStack{
             VStack{
                 List(0..<websocket.messages.count, id: \.self){ idx in
-                    if(websocket.messages[idx].sender_username == userModel?.userName){
-                        HStack{
-                            Spacer(minLength: 64)
-                            ChatCell(messageModel: websocket.messages[idx])
+                    VStack{
+                        if(websocket.messages[idx].sender_username == userModel?.userName){
+                            HStack{
+                                Spacer(minLength: 64)
+                                ChatCell(messageModel: websocket.messages[idx])
+                            }
                         }
-                    }
-                    else{
-                        ChatCell(messageModel: websocket.messages[idx])
-                        Spacer(minLength: 64)
-
+                        else{
+                            HStack{
+                                ChatCell(messageModel: websocket.messages[idx])
+                                Spacer(minLength: 64)
+                            }
+                            
+                        }
                     }
                     
                 }
@@ -57,7 +61,7 @@ struct ChatMain: View {
                     showAlert = true
                     return
                 }
-                DispatchQueue.main.async {
+                DispatchQueue.global(qos: .userInitiated).async {
                     websocket.messages = data.map{
                         MessageModel(data: $0)
                     }
