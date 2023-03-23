@@ -7,41 +7,53 @@
 
 import Foundation
 import SwiftUI
-class Websocket: ObservableObject {
+class Websocket:ObservableObject {
     @Published var messages:[MessageModel] = []
-    var webSocketTask: URLSessionWebSocketTask?
-    @Published var chatModel:ChatModel?
+    var webSocketTask:URLSessionWebSocketTask?
     
-    init(){
-        
-    }
-    
-    func connect() {
+    func connect(chatModel:ChatModel?) {
         guard let url = URL(string: "wss://api.chatengine.io/chat/?projectID=\(Common.shared.projectId)&chatID=\(chatModel!.id)&accessKey=\(chatModel!.access_key)") else { return }
-        print(url)
         let request = URLRequest(url: url)
-        webSocketTask = URLSession.shared.webSocketTask(with: request)
+        self.webSocketTask = URLSession.shared.webSocketTask(with: request)
+        
         webSocketTask?.resume()
         receiveMessage()
+        
     }
-    
-    func receiveMessage() {
+    private func receiveMessage() {
         webSocketTask?.receive { result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
+                self.webSocketTask?.resume()
             case .success(let message):
                 switch message {
                 case .string(let text):
+                    
                     guard let data = text.data(using: .utf8) else{
-                        return
+                        break
                     }
                     guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else{
-                        print("SERL ERR")
-                        return
+                            print("SERL ERR")
+                            break
                     }
                     
-                    self.messages.append(MessageModel(data: (jsonData as? [String:Any])?["data"] as! [String : Any]))
+                    guard let data2 = jsonData as? [String:Any] else{
+                        break
+                    }
+                    if(data2["action"] as! String == "new_message"){
+                        guard let data2 = data2["data"] as? [String:Any] else{
+                            break
+                        }
+                        guard let data2 = data2["message"] as? [String:Any] else{
+                            break
+                        }
+                        self.messages.append(MessageModel(data: data2))
+                        
+                        
+                    }
+                    
+                    
                 case .data(let data):
                     // Handle binary data
                     break
@@ -49,18 +61,11 @@ class Websocket: ObservableObject {
                     break
                 }
             }
+            self.receiveMessage()
         }
     }
     
-    func sendMessage(_ message: String) {
-        guard let data = message.data(using: .utf8) else { return }
-        webSocketTask?.send(.string(message)) { error in
-            
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-    }
+    
 }
 
 

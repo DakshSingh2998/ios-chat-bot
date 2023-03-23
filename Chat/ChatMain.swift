@@ -12,20 +12,33 @@ struct ChatMain: View {
     @Binding var userModel:UserModel?
     @Binding var chatModel:ChatModel?
     @State var agentName:String?
-    @ObservedObject var webSocket = Websocket()
     @State var textInTf = ""
     @State var alertText = ""
     @State var showAlert = false
+    @FocusState var textInTfFocused:Bool
+    @ObservedObject var websocket = Websocket()
     var body: some View {
         ZStack{
             VStack{
-                List(0..<webSocket.messages.count, id: \.self){ idx in
-                    Text(webSocket.messages[idx].text)
+                List(0..<websocket.messages.count, id: \.self){ idx in
+                    if(websocket.messages[idx].sender_username == userModel?.userName){
+                        HStack{
+                            Spacer(minLength: 64)
+                            ChatCell(messageModel: websocket.messages[idx])
+                        }
+                    }
+                    else{
+                        ChatCell(messageModel: websocket.messages[idx])
+                        Spacer(minLength: 64)
+
+                    }
+                    
                 }
                 Spacer()
                 TextField("Enter :)", text: $textInTf, onCommit: {
-                    
+                    sendMessage()
                 })
+                .focused($textInTfFocused)
                     
             }
         }
@@ -37,21 +50,41 @@ struct ChatMain: View {
         .onAppear(){
             var userName = UserDefaults.standard.value(forKey: "user") as! String
             var pass = UserDefaults.standard.value(forKey: "pass") as! String
+            
             ChatApi.shared.getMessages(userName: userName, pass: pass, chatId: chatModel!.id, completition: {data, error in
                 guard let data = data as? [[String: Any]] else {
                     alertText = (error as! Error).localizedDescription
                     showAlert = true
                     return
                 }
-                webSocket.messages = data.map{
-                    MessageModel(data: $0)
+                DispatchQueue.main.async {
+                    websocket.messages = data.map{
+                        MessageModel(data: $0)
+                    }
+                    websocket.connect(chatModel: chatModel)
+                    
                 }
-                print(data)
-                
             })
-            webSocket.chatModel = chatModel
-            webSocket.connect()
+             
+            
+            
         }
+    }
+    func sendMessage(){
+        var userName = UserDefaults.standard.value(forKey: "user") as! String
+        var pass = UserDefaults.standard.value(forKey: "pass") as! String
+        ChatApi.shared.sendMessage(userName: userName, pass: pass, chatId: chatModel!.id, text: textInTf, completition: {data, error in
+            guard let data = data as? [String: Any] else {
+                alertText = (error as! Error).localizedDescription
+                showAlert = true
+                return
+            }
+            textInTf = ""
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                textInTfFocused = true
+            })
+            
+        })
     }
 }
 
