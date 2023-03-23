@@ -10,6 +10,9 @@ import SwiftUI
 class Websocket:ObservableObject {
     @Published var messages:[MessageModel] = []
     var webSocketTask:URLSessionWebSocketTask?
+    @Published var userTyping = ""
+    @Published var lastTyping = ""
+    @Published var time = DispatchTime.now()
     
     func connect(chatModel:ChatModel?) {
         guard let url = URL(string: "wss://api.chatengine.io/chat/?projectID=\(Common.shared.projectId)&chatID=\(chatModel!.id)&accessKey=\(chatModel!.access_key)") else { return }
@@ -29,7 +32,7 @@ class Websocket:ObservableObject {
             case .success(let message):
                 switch message {
                 case .string(let text):
-                    
+                    print(text)
                     guard let data = text.data(using: .utf8) else{
                         break
                     }
@@ -51,7 +54,22 @@ class Websocket:ObservableObject {
                         DispatchQueue.global(qos: .userInitiated).async {
                             self.messages.append(MessageModel(data: data2))
                         }
-                        
+                    }
+                    if(data2["action"] as! String == "is_typing"){
+                        guard let data2 = data2["data"] as? [String:Any] else{
+                            break
+                        }
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            if(self.userTyping != "" &&  self.lastTyping != data2["person"] as! String){
+                                self.userTyping = "Both Typing"
+                            }
+                            else{
+                                self.userTyping = data2["person"] as! String
+                            }
+                            self.lastTyping = data2["person"] as! String
+                            
+                            self.time = .now() + 2
+                        }
                         
                     }
                     

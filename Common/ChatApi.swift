@@ -54,6 +54,17 @@ class ChatApi{
             
         })
     }
+    func sendTyping(userName:String, pass:String, chatId:Int, completition: ((Any, Any) -> ())?){
+        let url = "https://api.chatengine.io/chats/\(chatId)/typing/"
+
+        let httpMethod = "POST"
+        let addValue = ["Project-ID" : Common.shared.projectId, "User-Name" : userName, "User-Secret" : pass]
+        let setValue = ["Content-Type" : "application/json", "Accept" : "application/json"]
+        NetworkManager.shared.connect(url: url, httpMethod: httpMethod, setValue: setValue, addValue: addValue, completition: {data, error in
+            completition?(data, error)
+            
+        })
+    }
     
     func addMember(chatId:Int, userName:String, pass:String, userModelToAdd:String, completition:((Any, Any) -> ())?){
         let url = "https://api.chatengine.io/chats/\(chatId)/people/"

@@ -17,9 +17,22 @@ struct ChatMain: View {
     @State var showAlert = false
     @FocusState var textInTfFocused:Bool
     @ObservedObject var websocket = Websocket()
+    @State var timer:Timer?
+    @State var lastTextInTf = ""
+
     var body: some View {
         ZStack{
             VStack{
+                Text(websocket.userTyping)
+                    .onChange(of: websocket.time, perform: {newVal in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: {
+                            if(websocket.time <= .now()){
+                                websocket.userTyping = ""
+                                websocket.lastTyping = ""
+                            }
+                        })
+                        
+                    })
                 List(0..<websocket.messages.count, id: \.self){ idx in
                     VStack{
                         if(websocket.messages[idx].sender_username == userModel?.userName){
@@ -43,6 +56,7 @@ struct ChatMain: View {
                     sendMessage()
                 })
                 .focused($textInTfFocused)
+                
                     
             }
         }
@@ -52,6 +66,13 @@ struct ChatMain: View {
             })
         })
         .onAppear(){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { _ in
+                        updateCounting()
+                    })
+            })
+            
+             
             var userName = UserDefaults.standard.value(forKey: "user") as! String
             var pass = UserDefaults.standard.value(forKey: "pass") as! String
             
@@ -68,11 +89,21 @@ struct ChatMain: View {
                     websocket.connect(chatModel: chatModel)
                     
                 }
+                
             })
              
             
             
         }
+    }
+    func updateCounting(){
+        if(lastTextInTf != textInTf){
+            var userName = UserDefaults.standard.value(forKey: "user") as! String
+            var pass = UserDefaults.standard.value(forKey: "pass") as! String
+            ChatApi.shared.sendTyping(userName: userName, pass: pass, chatId: chatModel!.id, completition: {_,_ in
+            })
+        }
+        lastTextInTf = textInTf
     }
     func sendMessage(){
         var userName = UserDefaults.standard.value(forKey: "user") as! String
