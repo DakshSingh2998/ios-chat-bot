@@ -32,7 +32,7 @@ struct LogIn: View {
     @State var allChats:AllChats?
     @State var gotoAllChats = false
     @State var backgroundOpacity = 1.0
-
+    @State var UserDefaultPass = ""
     var body: some View {
         ZStack{
             ScrollView{

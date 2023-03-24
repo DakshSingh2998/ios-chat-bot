@@ -28,8 +28,7 @@ struct AllChats: View {
                 }
                 NavigationLink("OptionsMenu", destination: OptionsMenu(ONPAGE: $ONPAGE, userModel: $userModel), isActive: $gotoOptionsMenu)
                     .hidden()
-                NavigationLink("ChatMain", destination: ChatMain(ONPAGE: $ONPAGE, userModel: $userModel, chatModel: $chatModel, agentName:
-                                                                    ((chatModel?.people[0]["person"]) as? [String:Any])? ["username"] as? String), isActive: $gotoChatMain).hidden()
+                NavigationLink("ChatMain", destination: ChatMain(ONPAGE: $ONPAGE, userModel: $userModel, chatModel: $chatModel), isActive: $gotoChatMain).hidden()
             
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -54,18 +53,13 @@ struct AllChats: View {
         })
         
         .onAppear(){
-            var userName = UserDefaults.standard.value(forKey: "user") as! String
-            var pass = UserDefaults.standard.value(forKey: "pass") as! String
-            ChatApi.shared.getChats(userName: userName, pass: pass, completition: {data, error in
-                guard let data = data as? [[String: Any]] else {
-                    alertText = (error as! Error).localizedDescription
+            AllChatsModel.shared.getChats(userName: Common.shared.userDefaultName, pass: Common.shared.userDefaultPass, completition: {allChats, error in
+                if(error != nil){
+                    alertText = error!
                     showAlert = true
                     return
                 }
-                allChats = data.map{
-                    ChatModel(data: $0)
-                }
-                
+                self.allChats = allChats!
                 
             })
         }

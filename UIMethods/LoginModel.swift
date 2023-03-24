@@ -23,6 +23,8 @@ class LoginModel{
             
             UserDefaults.standard.set(tempPass, forKey: "pass")
             UserDefaults.standard.set(tempUser, forKey: "user")
+            Common.shared.userDefaultName = tempUser
+            Common.shared.userDefaultPass = tempPass
             userModel = UserModel(data: data)
             completition?(userModel, nil)
         })

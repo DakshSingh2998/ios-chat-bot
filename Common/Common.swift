@@ -14,6 +14,11 @@ class Common{
     var width = UIScreen.main.bounds.width
     var height = UIScreen.main.bounds.height
     var currentOrientation = UIDevice.current.orientation
+    
+    var userDefaultName = ""
+    var userDefaultPass = ""
+    
+    
     static var orientationUpdated: (() -> Void)?
     func updateOrientation(){
         var orientation = UIDevice.current.orientation

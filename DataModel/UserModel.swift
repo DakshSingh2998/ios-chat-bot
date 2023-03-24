@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct UserModel{
+struct UserModel {
     var id:Int = 0
     var is_authenticated:Bool = false
     var last_message:[String:Any] = [:]

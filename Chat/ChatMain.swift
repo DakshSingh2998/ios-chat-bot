@@ -11,7 +11,6 @@ struct ChatMain: View {
     @Binding var ONPAGE:Double
     @Binding var userModel:UserModel?
     @Binding var chatModel:ChatModel?
-    @State var agentName:String?
     @State var textInTf = ""
     @State var alertText = ""
     @State var showAlert = false
