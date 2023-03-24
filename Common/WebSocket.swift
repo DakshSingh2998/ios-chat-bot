@@ -28,6 +28,7 @@ class Websocket:ObservableObject {
             switch result {
             case .failure(let error):
                 print("rrr", error.localizedDescription)
+                
                 //self.webSocketTask?.resume()
             case .success(let message):
                 switch message {
