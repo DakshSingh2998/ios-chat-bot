@@ -215,54 +215,51 @@ struct SignUp: View {
         .onChange(of: vmPassword.value){newVal in
             checkValidity()
         }
-         
-        
-        
-
     }
     func createUser(){
-        UserApi.shared.createUser( userName: vmUserName.value, firstName: vmFirstName.value, lastName: vmLastName.value, password: vmPassword.value, completition:{
-            data, error in
-                backgroundOpacity = 1.0
-                guard let data = data as? [String: Any] else {
-                    commonAlert = "\((error as! Error).localizedDescription)"
-                    showCommonAlert = true
-                    return
-                }
-                if(data["message"] != nil){
-                    commonAlert = data["message"] as! String
-                    showCommonAlert = true
-                    return
-                }
-                alertText = "SignUp Successful :)"
-                successfulSignup = true
+        backgroundOpacity = 0.2
+        SignUpModel.shared.createUser(vmUserName: vmUserName.value, vmFirstName: vmFirstName.value, vmLastName: vmLastName.value, vmPassword: vmPassword.value, completition: {
+            error in
+            backgroundOpacity = 1.0
+            if(error != nil){
+                commonAlert = error
+                showCommonAlert = true
+                return
+            }
+            alertText = "SignUp Successful :)"
+            successfulSignup = true
+            
         })
     }
     func checkValidity(){
-        var tempIsValidUserName = Common.shared.isValidUserName(vmUserName.value)
-        if(tempIsValidUserName){
-            isUserNameIncorrect = false
-        }
-        var tempIsValidFirstName = Common.shared.isValidName(vmFirstName.value)
-        if(tempIsValidFirstName){
-            isFirstNameIncorrect = false
-        }
-        var tempIsValidLastName = Common.shared.isValidName(vmLastName.value)
-        if(tempIsValidLastName){
-            isLastNameIncorrect = false
-        }
-        var tempIsValidPassword = Common.shared.isValidPassword(vmPassword.value)
-        if(tempIsValidPassword){
-            isPasswordIncorrect = false
-        }
-        if(tempIsValidUserName && tempIsValidFirstName && tempIsValidLastName && tempIsValidPassword){
-            signUpButtonEnabled = true
-            buttonColor = Color("Purple")
-        }
-        else{
-            signUpButtonEnabled = false
-            buttonColor = Color("Grey")
-        }
+        SignUpModel.shared.checkValidity(vmUserName: vmUserName.value, vmFirstName: vmFirstName.value, vmLastName: vmLastName.value, vmPassword: vmPassword.value, completition: {
+            isUserNameIncorrect,
+            isFirstNameIncorrect,
+            isLastNameIncorrect,
+            isPasswordIncorrect,
+            signUpButtonEnabled in
+            if(isUserNameIncorrect == false){
+                self.isUserNameIncorrect = false
+            }
+            if(isFirstNameIncorrect == false){
+                self.isFirstNameIncorrect = false
+            }
+            if(isLastNameIncorrect == false){
+                self.isLastNameIncorrect = false
+            }
+            if(isPasswordIncorrect == false){
+                self.isPasswordIncorrect = false
+            }
+            self.signUpButtonEnabled = signUpButtonEnabled
+            if(self.signUpButtonEnabled == true){
+                buttonColor = Color("Purple")
+            }
+            else{
+                buttonColor = Color("Grey")
+
+            }
+            
+        })
     }
 }
 extension View{

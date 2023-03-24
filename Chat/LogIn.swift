@@ -128,29 +128,24 @@ struct LogIn: View {
     }
     
     func getUser(){
-        var tempPass = vmPass.value
-        var tempUser = vmUserName.value
         backgroundOpacity = 0.2
-        UserApi.shared.getUser(userName: vmUserName.value, pass: vmPass.value, completition: { data, error in
+        userModel = nil
+        LoginModel.shared.getUser(tempUser: vmUserName.value, tempPass: vmPass.value, completition: { userModel, error in
             backgroundOpacity = 1.0
-            guard let data = data as? [String: Any] else {
+            if(userModel == nil && error != nil){
                 commonAlert = "\((error as! Error).localizedDescription)"
                 showCommonAlert = true
                 return
             }
-            if(data["detail"] != nil){
+            else if(userModel == nil && error == nil){
                 isUserNameIncorrect = true
                 isPassIncorrect = true
                 return
             }
-            userModel = nil
-            UserDefaults.standard.set(tempPass, forKey: "pass")
-            UserDefaults.standard.set(tempUser, forKey: "user")
-            self.userModel = UserModel(data: data)
-            print(self.userModel)
+            self.userModel = userModel
             gotoAllChats = true
+            
         })
-         
     }
     
 }

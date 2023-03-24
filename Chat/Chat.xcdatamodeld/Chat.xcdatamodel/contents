@@ -5,7 +5,7 @@
     </entity>
     <entity name="TDataCore" representedClassName="TDataCore" syncable="YES">
         <attribute name="text" optional="YES" attributeType="String"/>
-        <relationship name="toMany" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TDataCore" inverseName="toMany" inverseEntity="TDataCore"/>
-        <relationship name="toOne" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="TDataCore" inverseName="toOne" inverseEntity="TDataCore"/>
+        <relationship name="toMany" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TDataCore"/>
+        <relationship name="toOne" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="TDataCore"/>
     </entity>
 </model>
